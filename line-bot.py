@@ -430,7 +430,7 @@ def handle_messages(event):
             hours=time_diff)
         raceend = datetime.fromisoformat(str(raceend).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
 
-        """def getTime():
+        def getTime():
             if datetime.now() < fp1end:
                 test_str = data[0]
             elif datetime.now() < fp2end:
@@ -441,9 +441,9 @@ def handle_messages(event):
                 test_str = data[3]
             elif datetime.now() < raceend:
                 test_str = data[4]
-            return test_str"""
+            return test_str
 
-        def getTime():
+        def getTime_sprint():
             if datetime.now() < fp1end:
                 test_str = data[0]
             elif datetime.now() < qualiend:
@@ -456,7 +456,7 @@ def handle_messages(event):
                 test_str = data[4]
             return test_str
 
-        """def getHeader():
+        def getHeader():
             if datetime.now() < fp1start:
                 header = 'COMING UP NEXT :\n'
             elif datetime.now() < fp2start:
@@ -477,9 +477,9 @@ def handle_messages(event):
                 header = 'CURRENTLY ON :\n'
             elif datetime.now() < raceend:
                 header = 'CURRENTLY ON :\n'
-            return header"""
+            return header
 
-        def getHeader():
+        def getHeader_sprint():
             if datetime.now() < fp1start:
                 header = 'COMING UP NEXT :\n'
             elif datetime.now() < qualistart:
@@ -512,8 +512,8 @@ def handle_messages(event):
             days, hours = divmod(hours, 24)
             return (days, hours, minutes, seconds)
 
-        time_slot = getTime()
-        time_header = getHeader()
+        time_slot = getTime_sprint()
+        time_header = getHeader_sprint()
 
         def getNextSlot(time_slot):
             if 'FP1' in time_slot:
