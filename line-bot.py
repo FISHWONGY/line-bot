@@ -101,7 +101,7 @@ def handle_messages(event):
         status_pattern = re.compile("|".join(status_replace.keys()))
         status_uk = status_pattern.sub(lambda m: status_replace[re.escape(m.group(0))], status_uk)
 
-        # Tai[ei
+        # Taipei
         # Get temperature
         tw_obs = mgr.weather_at_place('Taipei,TW')
         tw_w = tw_obs.weather
