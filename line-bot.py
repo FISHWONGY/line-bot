@@ -168,7 +168,6 @@ def handle_messages(event):
             TextSendMessage(text=random.choice(sonnet_list),
                             sender=Sender(
                                 name='AI Shakespeare',
-                                # name=None
                                 icon_url='https://media.newyorker.com/photos/5a57ced6f686540bff451ef2/1:1/w_1200,h_1200,c_limit/180122_r31326.jpg')
                             ))
 
