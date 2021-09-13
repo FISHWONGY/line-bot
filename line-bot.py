@@ -343,17 +343,17 @@ def handle_messages(event):
 
 # Fuction that gives the F1 race time
     elif input_text == '@f1':
-        GP_name = 'Monza GP'
-        time_diff = -1
-        page_timeTable = requests.get('https://www.formula1.com/en/racing/2021/Italy.html')
+        GP_name = 'Russia GP'
+        time_diff = -2
+        page_timeTable = requests.get('https://www.formula1.com/en/racing/2021/Russia.html')
         tree_timeTable = html.fromstring(page_timeTable.content)
 
         #######
-        """scrape_list = ['"row js-practice-1"', '"row js-practice-2"',
-                       '"row js-practice-3"', '"row js-qualifying"', '"row js-race"']"""
+        scrape_list = ['"row js-practice-1"', '"row js-practice-2"',
+                       '"row js-practice-3"', '"row js-qualifying"', '"row js-race"']
 
-        scrape_list = ['"row js-practice-1"', '"row js-qualifying"',
-                       '"row js-practice-2"', '"row js-sprint"', '"row js-race"']
+        """scrape_list = ['"row js-practice-1"', '"row js-qualifying"',
+                       '"row js-practice-2"', '"row js-sprint"', '"row js-race"']"""
 
         startTime_list_all = []
         for i in range(len(scrape_list)):
@@ -373,15 +373,15 @@ def handle_messages(event):
         endTime_list_all = [datetime.fromisoformat(w) + timedelta(hours=time_diff) for w in endTime_list_all]
         endTime_list_all = [w.strftime("%Y-%m-%d %H:%M:%S") for w in endTime_list_all]
 
-        # startTime_header = ['FP1 Start ', 'FP2 Start ', 'FP3 Start ', 'Quali Start ', 'Race Start ']
-        startTime_header = ['FP1 Start ', 'Quali Start ', 'FP2 Start ', 'Sprint Start ', 'Race Start ']
+        startTime_header = ['FP1 Start ', 'FP2 Start ', 'FP3 Start ', 'Quali Start ', 'Race Start ']
+        # startTime_header = ['FP1 Start ', 'Quali Start ', 'FP2 Start ', 'Sprint Start ', 'Race Start ']
 
         data_startTime = []
         for (item1, item2) in zip(startTime_header, startTime_list_all):
             data_startTime.append(item1 + item2)
 
-        # endTime_header = ['FP1 End ', 'FP2 End ', 'FP3 End ', 'Quali End ', 'Race End ']
-        endTime_header = ['FP1 End ', 'Quali End ', 'FP2 End ', 'Sprint End ', 'Race End ']
+        endTime_header = ['FP1 End ', 'FP2 End ', 'FP3 End ', 'Quali End ', 'Race End ']
+        # endTime_header = ['FP1 End ', 'Quali End ', 'FP2 End ', 'Sprint End ', 'Race End ']
 
         data_endTime = []
         for (item1, item2) in zip(endTime_header, endTime_list_all):
@@ -404,17 +404,17 @@ def handle_messages(event):
             hours=time_diff)
         fp2end = datetime.fromisoformat(str(fp2end).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
 
-        # fp3start = tree_timeTable.xpath('//div[@class="row js-practice-3"]/@data-start-time')
-        # fp3end = tree_timeTable.xpath('//div[@class="row js-practice-3"]/@data-end-time')
-        # fp3start = datetime.fromisoformat(str(fp3start).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
-        # fp3end = datetime.fromisoformat(str(fp3end).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
+        fp3start = tree_timeTable.xpath('//div[@class="row js-practice-3"]/@data-start-time')
+        fp3end = tree_timeTable.xpath('//div[@class="row js-practice-3"]/@data-end-time')
+        fp3start = datetime.fromisoformat(str(fp3start).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
+        fp3end = datetime.fromisoformat(str(fp3end).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
 
-        sprintstart = tree_timeTable.xpath('//div[@class="row js-sprint"]/@data-start-time')
-        sprintend = tree_timeTable.xpath('//div[@class="row js-sprint"]/@data-end-time')
-        sprintstart = datetime.fromisoformat(str(sprintstart).replace("['", "").replace("']", "")) + timedelta(
-            hours=time_diff)
-        sprintend = datetime.fromisoformat(str(sprintend).replace("['", "").replace("']", "")) + timedelta(
-            hours=time_diff)
+        # sprintstart = tree_timeTable.xpath('//div[@class="row js-sprint"]/@data-start-time')
+        # sprintend = tree_timeTable.xpath('//div[@class="row js-sprint"]/@data-end-time')
+        # sprintstart = datetime.fromisoformat(str(sprintstart).replace("['", "").replace("']", "")) + timedelta(
+        #     hours=time_diff)
+        # sprintend = datetime.fromisoformat(str(sprintend).replace("['", "").replace("']", "")) + timedelta(
+         #    hours=time_diff)
 
         qualistart = tree_timeTable.xpath('//div[@class="row js-qualifying"]/@data-start-time')
         qualiend = tree_timeTable.xpath('//div[@class="row js-qualifying"]/@data-end-time')
@@ -511,8 +511,8 @@ def handle_messages(event):
             days, hours = divmod(hours, 24)
             return (days, hours, minutes, seconds)
 
-        time_slot = getTime_sprint()
-        time_header = getHeader_sprint()
+        time_slot = getTime()
+        time_header = getHeader()
 
         def getNextSlot(time_slot):
             if 'FP1' in time_slot:
