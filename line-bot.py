@@ -24,8 +24,8 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('YOUR_API')
-handler = WebhookHandler('YOUR_HANDLER')
+line_bot_api = LineBotApi('LCrOhE5oTGFtefLIV6vir/FIdpQcT813cV7194fctILmdo+X8QiG7HJtrygcTrkd/AOdHBT+d9P/ugEQjw+szAyS5UlV5wAMKIhB6LLpsOzSEU84wfzpRuZVhFzNka5wCvAyr1HxwvfZLm7h3sqW6QdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('39f16bcacb4ef3f1db5181bf91a387c9')
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -68,7 +68,7 @@ def handle_messages(event):
 
     # Function that gives the current weather of 2 different
     elif input_text == '@weather':
-        owm = OWM('YOUR_API')
+        owm = OWM('2c433f4a36656535c2cf044543a1498c')
         mgr = owm.weather_manager()
 
         # UK
@@ -101,7 +101,7 @@ def handle_messages(event):
         status_pattern = re.compile("|".join(status_replace.keys()))
         status_uk = status_pattern.sub(lambda m: status_replace[re.escape(m.group(0))], status_uk)
 
-        # Taipei
+        # Tai[ei
         # Get temperature
         tw_obs = mgr.weather_at_place('Taipei,TW')
         tw_w = tw_obs.weather
@@ -146,17 +146,111 @@ def handle_messages(event):
                             )
         )
 
-    elif 'Hi' in str(event.message.text) or 'Hello' in str(event.message.text):
-        expression = ['Yoooo', 'Wassup']
+    elif input_text == '@since':
+        def dateDiff(date1, date2):
+            timedelta = date2 - date1
+            return timedelta.days
+
+        since_date = date(2021, 5, 30)
+        today = date.today()
+
+        lyrics = ['Thank god I found you', 'Coz all of me, love all of you~~~',
+                  "I love you baby, and if it's quite alright\nI need you baby to warm my lonely night",
+                  'The vacancy that sat in my heart\nIs a space that now you hold',
+                  "It's like you're my mirror\nMy mirror staring back at me",
+                  "I can't ever change without you\nYou reflect me, I love that about you",
+                  "Cause with your hand in my hand and a pocket full of soul\n"
+                  "I can tell you there's no place we couldn't go",
+                  "I don't wanna lose you now\nI'm lookin' right at the other half of me"
+                  "Show me how to fight for now\nAnd I'll tell you, baby, it was easy",
+                  "I found a love for me\nOh darling, just dive right in and follow my lead",
+                  "Darling, just hold my hand\nBe my girl, I'll be your man\nI see my future in your eyes",
+                  "I found a girl, beautiful and sweet\nI never knew you were the someone waiting for me",
+                  "Now I know I have met an angel in person\nAnd she looks perfect",
+                  "I don't deserve this\nYou look perfect every night", "Nothing's gonna change my love for you",
+                  "To the world\nYou may be just another girl\nBut to me\nBaby, you are the world",
+                  "You think you're one of millions\nBut you're one in a million to me"]
+
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=random.choice(expression)
+            TextSendMessage(text=emoji.emojize(':calendar:') + ' ' + emoji.emojize(':heart:', use_aliases=True) +
+                                 '\n' + "%d Days" % dateDiff(since_date, today) +
+                                 ' since we belong to each other ' +
+                                 emoji.emojize(':couple:', use_aliases=True) +
+                                 '\n\n' + random.choice(lyrics) + ' ' +
+                                 emoji.emojize(':revolving_hearts:', use_aliases=True)
+                            ))
+
+    elif input_text == '@ilovemyb':
+        pickup_line = ['給你變個魔術\n\n變得超級喜歡你', '你知道我屬什麼嗎？\n\n我屬於你', '你知道我最大的缺點是什麼嗎？\n\n缺點你',
+                       '你是什麼血型？\n\n你是我的理想型', '你知道喝什麼酒最容易醉嗎？\n\n你的天長地久',
+                       '我點的東西還沒來？\n\n我們的未來', '你為什麼要害我？\n\n害我那麼喜歡你啊QAQ',
+                       '我最近有點怕你\n\n因為我怕老婆', '不思進取\n\n思你', '落葉歸根\n\n我歸你',
+                       '你的臉上有點東西\n\n有點漂亮 (我寶寶隨時隨地漂亮！！']
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=random.choice(pickup_line),
+                            sender=Sender(
+                                name='土味情話系學霸',
+                                # name=None
+                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852684532913799208/image0.png')
                             )
         )
 
+    elif 'miss you' in str(event.message.text) or 'Miss you' in str(event.message.text) or \
+         'miss u' in str(event.message.text) or 'Miss u' in str(event.message.text):
+        expression = ['B I MISS YOU tooooo Q_Q', 'I MISS YOU 2 AHHHHHH', 'Missing you as well QAQ',
+                      '寶寶我也想你RRR', '我也超想你der~~']
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=random.choice(expression),
+                            sender=Sender(
+                                name='羅予含大美女',
+                                # name=None
+                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852689416127512576/1623312458715.jpg')
+                            ))
+
+    elif 'love you' in str(event.message.text) or 'Love you' in str(event.message.text) or \
+         'love u' in str(event.message.text) or 'Love u' in str(event.message.text):
+        expression = ['B I love you 2', 'I love you too', "Loving you\nIt's easy coz your beautiful~~~",
+                      '寶寶我也愛你', 'Bae I love you so much', "You're the love of my life"]
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=random.choice(expression),
+                            sender=Sender(
+                                name='羅予含大美女',
+                                # name=None
+                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852689416127512576/1623312458715.jpg')
+                            ))
+
+    elif '想你' in str(event.message.text) or '想妳' in str(event.message.text) or \
+         '掛住' in str(event.message.text):
+        expression = ['B I miss you 2', 'I miss you too', 'Missing you as well QAQ', '寶寶我也想你RRR', '我也超想你der~~']
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=random.choice(expression),
+                            sender=Sender(
+                                name='你超帥的男朋友',
+                                # name=None
+                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852954633512812554/IMG_20210611_175703.jpg')
+                            ))
+
+    elif '愛你' in str(event.message.text) or '愛妳' in str(event.message.text):
+        expression = ['B I love you 2', 'I love you too', "Loving you\nIt's easy coz your beautiful~~~",
+                      '寶寶我也愛你', 'Bae I love you so much', "You're the love of my life"]
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=random.choice(expression),
+                            sender=Sender(
+                                name='你超帥的男朋友',
+                                # name=None
+                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852954633512812554/IMG_20210611_175703.jpg')
+                            ))
+
     elif input_text == '@sonnet':
         sonnet_list = []
-        for root, dirs, files in os.walk('path_to_txt_file'):
+        for root, dirs, files in os.walk('/Volumes/My Passport for Mac/Python/Shakespeare_AI/'
+                                         'My sonnet output/discord'):
             for file in files:
                 if file.endswith('.txt'):
                     with open(os.path.join(root, file), 'r') as f:
@@ -168,6 +262,7 @@ def handle_messages(event):
             TextSendMessage(text=random.choice(sonnet_list),
                             sender=Sender(
                                 name='AI Shakespeare',
+                                # name=None
                                 icon_url='https://media.newyorker.com/photos/5a57ced6f686540bff451ef2/1:1/w_1200,h_1200,c_limit/180122_r31326.jpg')
                             ))
 
@@ -249,6 +344,7 @@ def handle_messages(event):
         driver_standing['Driver'] = driver_standing['Driver'].str.strip()
         driver_standing['Driver'] = driver_standing['Driver'].str.replace(" ", "")
         driver_standing['Driver'] = driver_standing['Driver'].str.replace("\n", " ")
+        # driver_standing = driver_standing.replace({'Driver': {" ": "", '\n': " "}})
 
         driver_standing[['First', 'Last', 'Int']] = driver_standing.Driver.str.split(" ", expand=True, )
         driver_standing['Driver'] = driver_standing['First'] + " " + driver_standing['Last']
@@ -343,17 +439,17 @@ def handle_messages(event):
 
 # Fuction that gives the F1 race time
     elif input_text == '@f1':
-        GP_name = 'Russia GP'
-        time_diff = -2
-        page_timeTable = requests.get('https://www.formula1.com/en/racing/2021/Russia.html')
+        GP_name = 'Monza GP'
+        time_diff = -1
+        page_timeTable = requests.get('https://www.formula1.com/en/racing/2021/Italy.html')
         tree_timeTable = html.fromstring(page_timeTable.content)
 
         #######
-        scrape_list = ['"row js-practice-1"', '"row js-practice-2"',
-                       '"row js-practice-3"', '"row js-qualifying"', '"row js-race"']
+        """scrape_list = ['"row js-practice-1"', '"row js-practice-2"',
+                       '"row js-practice-3"', '"row js-qualifying"', '"row js-race"']"""
 
-        """scrape_list = ['"row js-practice-1"', '"row js-qualifying"',
-                       '"row js-practice-2"', '"row js-sprint"', '"row js-race"']"""
+        scrape_list = ['"row js-practice-1"', '"row js-qualifying"',
+                       '"row js-practice-2"', '"row js-sprint"', '"row js-race"']
 
         startTime_list_all = []
         for i in range(len(scrape_list)):
@@ -373,15 +469,15 @@ def handle_messages(event):
         endTime_list_all = [datetime.fromisoformat(w) + timedelta(hours=time_diff) for w in endTime_list_all]
         endTime_list_all = [w.strftime("%Y-%m-%d %H:%M:%S") for w in endTime_list_all]
 
-        startTime_header = ['FP1 Start ', 'FP2 Start ', 'FP3 Start ', 'Quali Start ', 'Race Start ']
-        # startTime_header = ['FP1 Start ', 'Quali Start ', 'FP2 Start ', 'Sprint Start ', 'Race Start ']
+        # startTime_header = ['FP1 Start ', 'FP2 Start ', 'FP3 Start ', 'Quali Start ', 'Race Start ']
+        startTime_header = ['FP1 Start ', 'Quali Start ', 'FP2 Start ', 'Sprint Start ', 'Race Start ']
 
         data_startTime = []
         for (item1, item2) in zip(startTime_header, startTime_list_all):
             data_startTime.append(item1 + item2)
 
-        endTime_header = ['FP1 End ', 'FP2 End ', 'FP3 End ', 'Quali End ', 'Race End ']
-        # endTime_header = ['FP1 End ', 'Quali End ', 'FP2 End ', 'Sprint End ', 'Race End ']
+        # endTime_header = ['FP1 End ', 'FP2 End ', 'FP3 End ', 'Quali End ', 'Race End ']
+        endTime_header = ['FP1 End ', 'Quali End ', 'FP2 End ', 'Sprint End ', 'Race End ']
 
         data_endTime = []
         for (item1, item2) in zip(endTime_header, endTime_list_all):
@@ -404,17 +500,17 @@ def handle_messages(event):
             hours=time_diff)
         fp2end = datetime.fromisoformat(str(fp2end).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
 
-        fp3start = tree_timeTable.xpath('//div[@class="row js-practice-3"]/@data-start-time')
-        fp3end = tree_timeTable.xpath('//div[@class="row js-practice-3"]/@data-end-time')
-        fp3start = datetime.fromisoformat(str(fp3start).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
-        fp3end = datetime.fromisoformat(str(fp3end).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
+        # fp3start = tree_timeTable.xpath('//div[@class="row js-practice-3"]/@data-start-time')
+        # fp3end = tree_timeTable.xpath('//div[@class="row js-practice-3"]/@data-end-time')
+        # fp3start = datetime.fromisoformat(str(fp3start).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
+        # fp3end = datetime.fromisoformat(str(fp3end).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
 
-        # sprintstart = tree_timeTable.xpath('//div[@class="row js-sprint"]/@data-start-time')
-        # sprintend = tree_timeTable.xpath('//div[@class="row js-sprint"]/@data-end-time')
-        # sprintstart = datetime.fromisoformat(str(sprintstart).replace("['", "").replace("']", "")) + timedelta(
-        #     hours=time_diff)
-        # sprintend = datetime.fromisoformat(str(sprintend).replace("['", "").replace("']", "")) + timedelta(
-         #    hours=time_diff)
+        sprintstart = tree_timeTable.xpath('//div[@class="row js-sprint"]/@data-start-time')
+        sprintend = tree_timeTable.xpath('//div[@class="row js-sprint"]/@data-end-time')
+        sprintstart = datetime.fromisoformat(str(sprintstart).replace("['", "").replace("']", "")) + timedelta(
+            hours=time_diff)
+        sprintend = datetime.fromisoformat(str(sprintend).replace("['", "").replace("']", "")) + timedelta(
+            hours=time_diff)
 
         qualistart = tree_timeTable.xpath('//div[@class="row js-qualifying"]/@data-start-time')
         qualiend = tree_timeTable.xpath('//div[@class="row js-qualifying"]/@data-end-time')
@@ -429,7 +525,7 @@ def handle_messages(event):
             hours=time_diff)
         raceend = datetime.fromisoformat(str(raceend).replace("['", "").replace("']", "")) + timedelta(hours=time_diff)
 
-        def getTime():
+        """def getTime():
             if datetime.now() < fp1end:
                 test_str = data[0]
             elif datetime.now() < fp2end:
@@ -440,9 +536,9 @@ def handle_messages(event):
                 test_str = data[3]
             elif datetime.now() < raceend:
                 test_str = data[4]
-            return test_str
+            return test_str"""
 
-        def getTime_sprint():
+        def getTime():
             if datetime.now() < fp1end:
                 test_str = data[0]
             elif datetime.now() < qualiend:
@@ -455,7 +551,7 @@ def handle_messages(event):
                 test_str = data[4]
             return test_str
 
-        def getHeader():
+        """def getHeader():
             if datetime.now() < fp1start:
                 header = 'COMING UP NEXT :\n'
             elif datetime.now() < fp2start:
@@ -476,9 +572,9 @@ def handle_messages(event):
                 header = 'CURRENTLY ON :\n'
             elif datetime.now() < raceend:
                 header = 'CURRENTLY ON :\n'
-            return header
+            return header"""
 
-        def getHeader_sprint():
+        def getHeader():
             if datetime.now() < fp1start:
                 header = 'COMING UP NEXT :\n'
             elif datetime.now() < qualistart:
@@ -541,6 +637,35 @@ def handle_messages(event):
 
                         )
         )
+    else:
+        def readtxt(filename):
+            with open(filename) as f:
+                lines = f.readlines()
+                return lines
+
+        prefix = readtxt('/prefix.txt')
+        postfix_txt = readtxt('/postfix.txt')
+        dark_postfix_txt = readtxt('/darklised_postfix.txt')
+
+        postfix = [x.rstrip("\n") for x in postfix_txt]
+        dark_postfix = [x.rstrip("\n") for x in dark_postfix_txt]
+
+        blank_list = ['', '', '', '']
+        ww = [' w', ' ww', ' www', ' wwww ', '', '', '', '']
+
+        prefix_final = blank_list + prefix
+
+        # For multipleline input text
+        def finatext():
+            test = input_text.split('\n')
+            txtoutput_list = [x + random.choice(ww) + ' (' + random.choice(postfix) for x in test]
+            finaloutput = "\n".join(txtoutput_list)
+
+            return finaloutput
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=random.choice(prefix_final) + finatext()))
 
 
 if __name__ == "__main__":
