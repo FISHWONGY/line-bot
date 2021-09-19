@@ -637,6 +637,42 @@ def handle_messages(event):
 
                         )
         )
+        
+        elif input_text == '首抽':
+            
+        wikiurl = "https://zh.wikipedia.org/wiki/%E5%90%84%E5%9B%BD%E5%AE%B6%E5%92%8C%E5%9C%B0%E5%8C%BA%E4%BA%BA%E5%8F%A3%E5%88%97%E8%A1%A8"
+        table_class = "wikitable sortable jquery-tablesorter"
+        response = requests.get(wikiurl)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        worldtable = soup.find('table', {'class': "wikitable"})
+        df = pd.read_html(str(worldtable))
+        df = pd.DataFrame(df[0])
+        df = df[['國家/地區', '佔世界比']]
+        df.columns = ['country_old', 'percent']
+        df = df[(df['country_old'] != '世界')]
+        df['country'] = df['country_old'].str.split('[').str[0]
+        df = df[['country', 'percent']]
+        df['percent'] = df['percent'].str.strip()
+        df['percent'] = df['percent'].str.replace('%', '')
+        df['percent'] = df['percent'].str.replace("‰", "")
+        df['percent'] = pd.to_numeric(df['percent'], errors='coerce')
+        df['percent_new'] = df['percent'] / df['percent'].sum()
+
+        draw = str(choice(df['country'].tolist(), 1, p=df.iloc[:, 2]))
+        draw = draw.replace("'", '')
+        draw = draw.replace("[", '')
+        draw = draw.replace("]", '')
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='你下世做' + draw + '人啦^_^',
+                            sender=Sender(
+                                name='刷首抽轉盤',
+                                # name=None
+                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/889130450180784169/unknown.png')
+                            )
+                                )    
+        
     else:
         def readtxt(filename):
             with open(filename) as f:
