@@ -24,8 +24,8 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('')
-handler = WebhookHandler('')
+line_bot_api = LineBotApi('YOUR_TOKEN')
+handler = WebhookHandler('YOUR_TOKEN')
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -145,29 +145,6 @@ def handle_messages(event):
                 dateDiffInSeconds(now, end_date)) + ' ' + emoji.emojize(':santa:', use_aliases=True)
                             )
         )
-
-    elif input_text == '@since':
-        def dateDiff(date1, date2):
-            timedelta = date2 - date1
-            return timedelta.days
-
-        since_date = date(2021, 5, 30)
-        today = date.today()
-
-        lyrics = ['Thank god I found you', 'Coz all of me, love all of you~~~',
-                  "To the world\nYou may be just another girl\nBut to me\nBaby, you are the world",
-                  "You think you're one of millions\nBut you're one in a million to me"]
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=emoji.emojize(':calendar:') + ' ' + emoji.emojize(':heart:', use_aliases=True) +
-                                 '\n' + "%d Days" % dateDiff(since_date, today) +
-                                 ' since we belong to each other ' +
-                                 emoji.emojize(':couple:', use_aliases=True) +
-                                 '\n\n' + random.choice(lyrics) + ' ' +
-                                 emoji.emojize(':revolving_hearts:', use_aliases=True)
-                            ))
-
  
 
    
