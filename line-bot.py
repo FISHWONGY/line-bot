@@ -24,8 +24,8 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('LCrOhE5oTGFtefLIV6vir/FIdpQcT813cV7194fctILmdo+X8QiG7HJtrygcTrkd/AOdHBT+d9P/ugEQjw+szAyS5UlV5wAMKIhB6LLpsOzSEU84wfzpRuZVhFzNka5wCvAyr1HxwvfZLm7h3sqW6QdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('39f16bcacb4ef3f1db5181bf91a387c9')
+line_bot_api = LineBotApi('')
+handler = WebhookHandler('')
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -155,19 +155,6 @@ def handle_messages(event):
         today = date.today()
 
         lyrics = ['Thank god I found you', 'Coz all of me, love all of you~~~',
-                  "I love you baby, and if it's quite alright\nI need you baby to warm my lonely night",
-                  'The vacancy that sat in my heart\nIs a space that now you hold',
-                  "It's like you're my mirror\nMy mirror staring back at me",
-                  "I can't ever change without you\nYou reflect me, I love that about you",
-                  "Cause with your hand in my hand and a pocket full of soul\n"
-                  "I can tell you there's no place we couldn't go",
-                  "I don't wanna lose you now\nI'm lookin' right at the other half of me"
-                  "Show me how to fight for now\nAnd I'll tell you, baby, it was easy",
-                  "I found a love for me\nOh darling, just dive right in and follow my lead",
-                  "Darling, just hold my hand\nBe my girl, I'll be your man\nI see my future in your eyes",
-                  "I found a girl, beautiful and sweet\nI never knew you were the someone waiting for me",
-                  "Now I know I have met an angel in person\nAnd she looks perfect",
-                  "I don't deserve this\nYou look perfect every night", "Nothing's gonna change my love for you",
                   "To the world\nYou may be just another girl\nBut to me\nBaby, you are the world",
                   "You think you're one of millions\nBut you're one in a million to me"]
 
@@ -181,76 +168,12 @@ def handle_messages(event):
                                  emoji.emojize(':revolving_hearts:', use_aliases=True)
                             ))
 
-    elif input_text == '@ilovemyb':
-        pickup_line = ['給你變個魔術\n\n變得超級喜歡你', '你知道我屬什麼嗎？\n\n我屬於你', '你知道我最大的缺點是什麼嗎？\n\n缺點你',
-                       '你是什麼血型？\n\n你是我的理想型', '你知道喝什麼酒最容易醉嗎？\n\n你的天長地久',
-                       '我點的東西還沒來？\n\n我們的未來', '你為什麼要害我？\n\n害我那麼喜歡你啊QAQ',
-                       '我最近有點怕你\n\n因為我怕老婆', '不思進取\n\n思你', '落葉歸根\n\n我歸你',
-                       '你的臉上有點東西\n\n有點漂亮 (我寶寶隨時隨地漂亮！！']
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=random.choice(pickup_line),
-                            sender=Sender(
-                                name='土味情話系學霸',
-                                # name=None
-                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852684532913799208/image0.png')
-                            )
-        )
+ 
 
-    elif 'miss you' in str(event.message.text) or 'Miss you' in str(event.message.text) or \
-         'miss u' in str(event.message.text) or 'Miss u' in str(event.message.text):
-        expression = ['B I MISS YOU tooooo Q_Q', 'I MISS YOU 2 AHHHHHH', 'Missing you as well QAQ',
-                      '寶寶我也想你RRR', '我也超想你der~~']
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=random.choice(expression),
-                            sender=Sender(
-                                name='羅予含大美女',
-                                # name=None
-                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852689416127512576/1623312458715.jpg')
-                            ))
-
-    elif 'love you' in str(event.message.text) or 'Love you' in str(event.message.text) or \
-         'love u' in str(event.message.text) or 'Love u' in str(event.message.text):
-        expression = ['B I love you 2', 'I love you too', "Loving you\nIt's easy coz your beautiful~~~",
-                      '寶寶我也愛你', 'Bae I love you so much', "You're the love of my life"]
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=random.choice(expression),
-                            sender=Sender(
-                                name='羅予含大美女',
-                                # name=None
-                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852689416127512576/1623312458715.jpg')
-                            ))
-
-    elif '想你' in str(event.message.text) or '想妳' in str(event.message.text) or \
-         '掛住' in str(event.message.text):
-        expression = ['B I miss you 2', 'I miss you too', 'Missing you as well QAQ', '寶寶我也想你RRR', '我也超想你der~~']
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=random.choice(expression),
-                            sender=Sender(
-                                name='你超帥的男朋友',
-                                # name=None
-                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852954633512812554/IMG_20210611_175703.jpg')
-                            ))
-
-    elif '愛你' in str(event.message.text) or '愛妳' in str(event.message.text):
-        expression = ['B I love you 2', 'I love you too', "Loving you\nIt's easy coz your beautiful~~~",
-                      '寶寶我也愛你', 'Bae I love you so much', "You're the love of my life"]
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=random.choice(expression),
-                            sender=Sender(
-                                name='你超帥的男朋友',
-                                # name=None
-                                icon_url='https://cdn.discordapp.com/attachments/813130040938201131/852954633512812554/IMG_20210611_175703.jpg')
-                            ))
-
+   
     elif input_text == '@sonnet':
         sonnet_list = []
-        for root, dirs, files in os.walk('/Volumes/My Passport for Mac/Python/Shakespeare_AI/'
-                                         'My sonnet output/discord'):
+        for root, dirs, files in os.walk('My sonnet output/discord'):
             for file in files:
                 if file.endswith('.txt'):
                     with open(os.path.join(root, file), 'r') as f:
