@@ -68,7 +68,7 @@ def handle_messages(event):
 
     # Function that gives the current weather of 2 different
     elif input_text == '@weather':
-        owm = OWM('2c433f4a36656535c2cf044543a1498c')
+        owm = OWM('YOUR_TOKEN')
         mgr = owm.weather_manager()
 
         # UK
