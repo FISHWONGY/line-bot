@@ -24,6 +24,8 @@ Line messenger bot
     - Scrpae the F1 website to get current driver/ constructor championship stnading
 - Count down
     - Count down function to certain date/ events
+- Random Drawing
+    - Automatically choose restaurant
 
 
 ## Example Output
