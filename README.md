@@ -22,6 +22,7 @@ Line messenger bot
 - Web scrapper
     - Scrape https://www.f1.com to get F1 weekly race calender 
     - Scrpae the F1 website to get current driver/ constructor championship stnading
+    - Scrape table from wiki
 - Count down
     - Count down function to certain date/ events
 - Random Drawing
