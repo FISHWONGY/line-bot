@@ -30,5 +30,5 @@ Line messenger bot
 
 
 ## Example
-![](photo/line_bot_sample.jpeg)
+![](photo/linebot_sample.jpeg)
 
