@@ -101,20 +101,20 @@ def handle_messages(event):
         status_pattern = re.compile("|".join(status_replace.keys()))
         status_uk = status_pattern.sub(lambda m: status_replace[re.escape(m.group(0))], status_uk)
 
-        # Tai[ei
+        # Hong Kong
         # Get temperature
-        tw_obs = mgr.weather_at_place('Hong Kong')
-        tw_w = tw_obs.weather
-        temp_tw = tw_w.temperature('celsius')
+        hk_obs = mgr.weather_at_place('Hong Kong, HK')
+        hk_w = hk_obs.weather
+        temp_hk = hk_w.temperature('celsius')
         for e in ['temp_kf', 'temp_max', 'temp_min']:
-            temp_tw.pop(e)
-        temp_tw2 = str(temp_tw)
+            temp_hk.pop(e)
+        temp_hk2 = str(temp_hk)
 
-        temp_tw2 = pattern.sub(lambda m: rep[re.escape(m.group(0))], temp_tw2)
+        temp_hk2 = pattern.sub(lambda m: rep[re.escape(m.group(0))], temp_hk2)
 
-        # Get detailed status of TW
-        status_tw = tw_w.detailed_status
-        status_tw = status_pattern.sub(lambda m: status_replace[re.escape(m.group(0))], status_tw)
+        # Get detailed status of HK
+        status_hk = hk_w.detailed_status
+        status_hk = status_pattern.sub(lambda m: status_replace[re.escape(m.group(0))], status_hk)
 
         line_bot_api.reply_message(
             event.reply_token,
@@ -168,7 +168,7 @@ def handle_messages(event):
 
 # Function that gives current F1 team standing
     elif input_text == '@f1team':
-        page_team = requests.get('https://www.formula1.com/en/results.html/2021/team.html')
+        page_team = requests.get('https://www.formula1.com/en/results.html/2022/team.html')
         tree_team = html.fromstring(page_team.content)
         team_sd = tree_team.xpath('//tr')
         column_headers = []
@@ -217,7 +217,7 @@ def handle_messages(event):
 
 # Fuction that gives the current f1 driver standings
     elif input_text == '@f1driver':
-        page_dr = requests.get('https://www.formula1.com/en/results.html/2021/drivers.html')
+        page_dr = requests.get('https://www.formula1.com/en/results.html/2022/drivers.html')
         tree_dr = html.fromstring(page_dr.content)
         driver_sd = tree_dr.xpath('//tr')
         column_headers = []
@@ -244,6 +244,8 @@ def handle_messages(event):
         driver_standing['Driver'] = driver_standing['Driver'].str.strip()
         driver_standing['Driver'] = driver_standing['Driver'].str.replace(" ", "")
         driver_standing['Driver'] = driver_standing['Driver'].str.replace("\n", " ")
+        driver_standing['Driver'] = driver_standing['Driver'].str.replace("  ", " ")
+        driver_standing['Driver'] = driver_standing['Driver'].str.replace("  ", " ")
         # driver_standing = driver_standing.replace({'Driver': {" ": "", '\n': " "}})
 
         driver_standing[['First', 'Last', 'Int']] = driver_standing.Driver.str.split(" ", expand=True, )
