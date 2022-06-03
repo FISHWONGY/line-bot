@@ -29,5 +29,4 @@ Line messenger bot
     - Automatically choose restaurant
 
 
-## Example Output
-![](photo/linebot_sample.jpeg)
+
