@@ -119,7 +119,7 @@ def handle_messages(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=flag.flagize(":GB:即時倫敦天氣 :\n") + temp_uk2 + '\n' + status_uk + '\n\n' +
-                                 flag.flagize(":TW:即時香港天氣 :\n") + temp_tw2 + '\n' + status_tw)
+                                 flag.flagize(":HK:即時香港天氣 :\n") + temp_tw2 + '\n' + status_tw)
 
         )
 
