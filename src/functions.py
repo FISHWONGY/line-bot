@@ -1,3 +1,16 @@
+from utils import *
+import emoji
+import flag
+import re
+import random
+import time
+import calendar
+import pandas as pd
+from pyowm import OWM
+from lxml import html
+from datetime import datetime, timedelta, date
+import pytz
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
