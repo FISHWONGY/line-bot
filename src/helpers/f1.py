@@ -1,108 +1,64 @@
 from lxml import html
-import pandas as pd
 import requests
 
 
-def team_std() -> str:
-    page_team = requests.get("https://www.formula1.com/en/results.html/2022/team.html")
+def scrape_f1_page(web_url: str) -> dict:
+    page_team = requests.get(web_url)
     tree_team = html.fromstring(page_team.content)
+
     team_sd = tree_team.xpath("//tr")
-    column_headers = []
 
-    for column in team_sd[0]:
-        name = column.text_content()
-        column_headers.append((name, []))
+    column_headers = [(column.text_content(), []) for column in team_sd[0]]
 
-    for row in range(1, len(team_sd)):
-        table_tr = team_sd[row]
-
-        column_count = 0
-
-        for column in table_tr.iterchildren():
+    for row in team_sd[1:]:
+        for column_count, column in enumerate(row.iterchildren()):
             data = column.text_content()
             column_headers[column_count][1].append(data)
-            column_count += 1
 
-    dictionary = {title: column for (title, column) in column_headers}
+    return {title: column for title, column in column_headers}
 
-    team_standing = pd.DataFrame(dictionary)
 
-    # data cleaning
-    team_standing = team_standing.drop("", 1)
-    team_standing["Team"] = team_standing["Team"].str.strip()
+def clean_and_format(data_list: list) -> list:
+    return [
+        item.strip().replace("\n", "").replace(" ", "").replace("  ", " ")
+        for item in data_list
+    ]
 
-    team_pos_list = team_standing["Pos"].tolist()
-    team_name_list = team_standing["Team"].tolist()
-    team_pts_list = team_standing["PTS"].tolist()
 
-    teamstr = ""
-    for i in range(len(team_pos_list)):
-        teamstr += (
-            team_pos_list[i]
-            + ". "
-            + team_name_list[i]
-            + " - "
-            + team_pts_list[i]
-            + " PTS\n"
-        )
-    teamstr = "Current Constructor Standings: \n\n" + teamstr
+def team_std() -> str:
+    url = "https://www.formula1.com/en/results.html/2022/team.html"
+    team_dict = scrape_f1_page(url)
 
-    return teamstr
+    team_dict["Team"] = clean_and_format(team_dict["Team"])
+
+    team_str = "\n".join(
+        f"{pos}. {name} - {pts} PTS"
+        for pos, name, pts in zip(team_dict["Pos"], team_dict["Team"], team_dict["PTS"])
+    )
+
+    return f"Current Constructor Standings: \n\n{team_str}"
 
 
 def driver_std() -> str:
-    page_dr = requests.get("https://www.formula1.com/en/results.html/2022/drivers.html")
-    tree_dr = html.fromstring(page_dr.content)
-    driver_sd = tree_dr.xpath("//tr")
-    column_headers = []
+    url = "https://www.formula1.com/en/results.html/2022/drivers.html"
+    driver_dict = scrape_f1_page(url)
 
-    for column in driver_sd[0]:
-        name = column.text_content()
-        column_headers.append((name, []))
+    driver_dict["Car"] = clean_and_format(driver_dict["Car"])
+    driver_dict["Driver"] = [
+        name.strip().replace(" ", "").replace("\n", " ").replace("  ", " ")
+        for name in driver_dict["Driver"]
+    ]
 
-    for row in range(1, len(driver_sd)):
-        table_tr = driver_sd[row]
+    driver_dict["Driver"] = [
+        f"{first} {last}"
+        for first, last, _ in [name.split(" ", 2) for name in driver_dict["Driver"]]
+    ]
 
-        column_count = 0
-
-        for column in table_tr.iterchildren():
-            data = column.text_content()
-            column_headers[column_count][1].append(data)
-            column_count += 1
-
-    dictionary = {title: column for (title, column) in column_headers}
-
-    driver_standing = pd.DataFrame(dictionary)
-    driver_standing = driver_standing.drop("", 1)
-    driver_standing["Car"] = driver_standing["Car"].str.strip()
-    driver_standing["Driver"] = driver_standing["Driver"].str.strip()
-    driver_standing["Driver"] = driver_standing["Driver"].str.replace(" ", "")
-    driver_standing["Driver"] = driver_standing["Driver"].str.replace("\n", " ")
-    driver_standing["Driver"] = driver_standing["Driver"].str.replace("  ", " ")
-    driver_standing["Driver"] = driver_standing["Driver"].str.replace("  ", " ")
-    # driver_standing = driver_standing.replace({'Driver': {" ": "", '\n': " "}})
-
-    driver_standing[["First", "Last", "Int"]] = driver_standing.Driver.str.split(
-        " ",
-        expand=True,
-    )
-    driver_standing["Driver"] = driver_standing["First"] + " " + driver_standing["Last"]
-    driver_standing = driver_standing.drop(["First", "Last"], axis=1)
-
-    dr_pos_list = driver_standing["Pos"].tolist()
-    dr_name_list = driver_standing["Driver"].tolist()
-    dr_pts_list = driver_standing["PTS"].tolist()
-    dr_str = ""
-    for i in range(len(dr_pos_list)):
-        dr_str += (
-            dr_pos_list[i]
-            + ". "
-            + dr_name_list[i]
-            + "  -  "
-            + dr_pts_list[i]
-            + " PTS\n"
+    dr_str = "\n".join(
+        f"{pos}. {name}  -  {pts} PTS"
+        for pos, name, pts in zip(
+            driver_dict["Pos"], driver_dict["Driver"], driver_dict["PTS"]
         )
+    )
 
-    dr_str = "Current F1 Driver Standings: \n\n" + dr_str
-
-    return dr_str
+    return f"Current F1 Driver Standings: \n\n{dr_str}"
