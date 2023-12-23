@@ -48,8 +48,8 @@ def handle_messages(event):
         )
 
     elif input_text == "@weather":
-        uk_temp, uk_status = owmapi.get_weather_deatils("London,GB")
-        hk_temp, hk_status = owmapi.get_weather_deatils("Hong Kong, HK")
+        uk_temp, uk_status = owmapi.get_weather_details("London,GB")
+        hk_temp, hk_status = owmapi.get_weather_details("Hong Kong, HK")
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(
