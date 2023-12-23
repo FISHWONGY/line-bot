@@ -1,7 +1,6 @@
 import os
 import random
 import requests
-import pandas as pd
 from bs4 import BeautifulSoup
 
 
@@ -30,29 +29,30 @@ def random_sonnet(file_path: str) -> str:
 
 
 def random_country(url: str) -> str:
-    wikiurl = url
-    response = requests.get(wikiurl)
+    response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     worldtable = soup.find("table", {"class": "wikitable"})
-    df = pd.read_html(str(worldtable))
-    df = pd.DataFrame(df[0])
-    df = df[["國家/地區", "佔世界比"]]
-    df.columns = ["country_old", "percent"]
-    df = df[(df["country_old"] != "世界")]
-    df["country"] = df["country_old"].str.split("[").str[0]
-    df = df[["country", "percent"]]
-    df["percent"] = df["percent"].str.strip()
-    df["percent"] = df["percent"].str.replace("%", "")
-    df["percent"] = df["percent"].str.replace("‰", "")
-    df["percent"] = pd.to_numeric(df["percent"], errors="coerce")
-    df["percent_new"] = df["percent"] / df["percent"].sum()
 
-    draw = str(random.choice(df["country"].tolist(), 1, p=df.iloc[:, 2]))
-    draw = draw.replace("'", "")
-    draw = draw.replace("[", "")
-    draw = draw.replace("]", "")
+    countries = [
+        row.select_one("td:nth-of-type(1)").get_text(strip=True)
+        for row in worldtable.select("tr")[1:]
+    ]
+    percentages = [
+        float(
+            row.select_one("td:nth-of-type(2)")
+            .get_text(strip=True)
+            .replace("%", "")
+            .replace("‰", "")
+            .strip()
+        )
+        for row in worldtable.select("tr")[1:]
+    ]
 
-    return f""""你下世做{draw}人啦^_^"""
+    percentages = [percent / sum(percentages) for percent in percentages]
+
+    selected_country = random.choices(countries, weights=percentages)[0]
+
+    return f"你下世做{selected_country}人啦^_^"
 
 
 def readtxt(filename):
