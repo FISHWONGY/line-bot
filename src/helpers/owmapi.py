@@ -1,6 +1,6 @@
 import re
 from typing import Tuple
-from helpers.utils import mgr, owm_temp_metrics, owm_rep_dict, owm_status_replace_dict
+from utils import mgr, owm_temp_metrics, owm_rep_dict, owm_status_replace_dict
 
 
 def clean_data(str_obj: str, replace_dict: dict) -> str:

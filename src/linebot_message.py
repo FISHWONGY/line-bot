@@ -1,4 +1,4 @@
-from helpers.utils import *
+from utils import *
 from helpers.functions import *
 import helpers.owmapi as owmapi
 import helpers.f1 as f1
