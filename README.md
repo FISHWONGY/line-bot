@@ -1,20 +1,34 @@
 # line-bot
 Line messenger bot
 
-## Installation
+## ✨ Folder Structure
+```
+├── README.md
+├── requirements.txt
+└── src
+    ├── helpers
+    │   ├── f1.py
+    │   ├── functions.py
+    │   └── owmapi.py
+    ├── linebot_message.py
+    ├── main.py
+    └── utils.py
+```
+
+## ✨ Installation
 
 ```git clone https://github.com/FISHWONGY/line-bot/```
 
 ```pip install -r requirements.txt```
 
-## Hosting
+## ✨ Hosting
 1. Create an account on [LINE Developer](https://developers.line.biz/en/)
 2. Register an Messanging API
 3. Use [ngrok](https://dashboard.ngrok.com/) for webhook
 4. Run ```ngrok http 5000```
 5. Change webhook URL in Messaging API
 
-## Current usages
+## ✨ Current usages
 - Auto Reply
     - Auto reply when text messeges/ command is received
 - Open Weather API
@@ -29,6 +43,6 @@ Line messenger bot
     - Automatically choose restaurant
 
 
-## Example
+## ✨ Example
 ![](photo/linebot_sample.jpeg)
 
