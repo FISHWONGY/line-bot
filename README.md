@@ -44,5 +44,6 @@ Line messenger bot
 
 
 ## ✨ Example
-![](photo/linebot_sample.jpeg)
+![linebot_sample](https://github.com/FISHWONGY/line-bot/assets/59711659/20cd6f7c-0b5c-4c77-9b13-d0863bcf76e0)
+
 
