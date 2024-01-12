@@ -1,7 +1,13 @@
 # line-bot
 Line messenger bot
 
-## ✨ Folder Structure
+This project is a Line Chatbot that provides automated responses. It was developed in Python and uses the Line Python SDK, web scrapping and OpenWeather API for chat operations.
+
+## ✨ Demo
+![linebot_sample](https://github.com/FISHWONGY/line-bot/assets/59711659/20cd6f7c-0b5c-4c77-9b13-d0863bcf76e0)
+
+
+## 📁 Folder Structure
 ```
 ├── README.md
 ├── requirements.txt
@@ -15,7 +21,7 @@ Line messenger bot
     └── utils.py
 ```
 
-## ✨ Installation
+## 🚀 Installation
 
 ```git clone https://github.com/FISHWONGY/line-bot/```
 
@@ -41,9 +47,4 @@ Line messenger bot
     - Count down function to certain date/ events
 - Random Drawing
     - Automatically choose restaurant
-
-
-## ✨ Example
-![linebot_sample](https://github.com/FISHWONGY/line-bot/assets/59711659/20cd6f7c-0b5c-4c77-9b13-d0863bcf76e0)
-
 
